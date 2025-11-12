@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Newsletter – KIVARA</title>
+  <style>
+    :root {
+      --primary: #0078D4;
+      --dark: #0a0a0a;
+      --light: #fafafa;
+      --text: #222;
+      --border: #e0e0e0;
+      --shadow: rgba(0, 0, 0, 0.03);
+    }
+
+    [data-theme="dark"] {
+      --dark: #0f0f0f;
+      --light: #121212;
+      --text: #f0f0f0;
+      --border: #333;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+    /* === NEUE NAVIGATION === */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background-color: rgba(var(--light), 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px var(--shadow);
+    }
+
+    .logo {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+    }
+
+    main {
+      padding: 10rem 5% 6rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+    }
+
+    p {
+      font-size: 1.4rem;
+      color: #666;
+      margin-bottom: 3rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 1.2rem;
+      font-size: 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background-color: var(--light);
+      color: var(--text);
+      transition: border 0.3s;
+    }
+
+    input[type="email"]:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .cta-button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 1.1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .note {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #888;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 5% 2rem;
+      color: #888;
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">KIVARA</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/products">Products</a></li>
+        <li><a href="/company">Company</a></li>
+        <li><a href="/newsletter" class="active">Newsletter</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+  </header>
+
+  <main>
+    <h1>Stay Updated</h1>
+    <p>Get product updates, new features, and automation tips — once a month, no spam.</p>
+
+    <form action="https://buttondown.email/api/emails/embed-subscribe/kivara" method="post" target="popupwindow">
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Your email address" required />
+      </div>
+      <button type="submit" class="cta-button">Subscribe</button>
+    </form>
+
+    <p class="note">We respect your privacy. Unsubscribe anytime.</p>
+  </main>
+
+  <footer>
+    <p>© KIVARA. Software for those who believe automation should be elegant.<br>
+    <a href="/products">Products</a> • <a href="/company">Company</a> • <a href="/contact">Contact</a></p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      body.setAttribute('data-theme', 'dark');
+      themeToggle.textContent = '☀️';
+    }
+    themeToggle.addEventListener('click', () => {
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+
+</body>
+</html>

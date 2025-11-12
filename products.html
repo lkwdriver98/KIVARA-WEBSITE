@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products – KIVARA</title>
+  <style>
+    :root {
+      --primary: #0078D4;
+      --dark: #0a0a0a;
+      --light: #fafafa;
+      --text: #222;
+      --border: #e0e0e0;
+      --shadow: rgba(0, 0, 0, 0.03);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --dark: #0f0f0f;
+      --light: #121212;
+      --text: #f0f0f0;
+      --border: #333;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+    /* === NEUE NAVIGATION === */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background-color: rgba(var(--light), 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px var(--shadow);
+      transition: var(--transition);
+    }
+
+    .logo {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+    }
+
+    main {
+      padding: 10rem 5% 6rem;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      color: #666;
+      margin-bottom: 6rem;
+      max-width: 800px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .plan {
+      background-color: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 10px 40px var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .plan:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .plan h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .price {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .price span {
+      font-size: 1.2rem;
+      color: #888;
+      font-weight: normal;
+    }
+
+    .features {
+      list-style: none;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .features li {
+      padding: 0.8rem 0;
+      border-bottom: 1px dashed var(--border);
+      color: #666;
+    }
+
+    .features li:last-child {
+      border-bottom: none;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-top: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .enterprise-cta {
+      text-align: center;
+      margin-top: 5rem;
+      padding-top: 4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .enterprise-cta p {
+      font-size: 1.4rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 5% 2rem;
+      color: #888;
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.8rem; }
+      .pricing-grid { gap: 2rem; }
+      .plan { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">KIVARA</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/products" class="active">Products</a></li>
+        <li><a href="/company">Company</a></li>
+        <li><a href="/newsletter">Newsletter</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+  </header>
+
+  <main>
+    <h1>Products</h1>
+    <p class="subtitle">Powerful tools for automation and system administration – built for individuals and teams.</p>
+
+    <div class="pricing-grid">
+      <div class="plan">
+        <h2>Free</h2>
+        <div class="price">€0 <span>/ forever</span></div>
+        <p>Ideal for learners and personal use.</p>
+        <ul class="features">
+          <li>Visual automation builder</li>
+          <li>Basic PowerShell modules</li>
+          <li>Local workflow execution</li>
+          <li>Light & dark mode</li>
+          <li>Community support</li>
+        </ul>
+        <a href="https://github.com/DEIN-BENUTZERNAME/kat" class="cta-button">Download</a>
+      </div>
+
+      <div class="plan" style="border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary);">
+        <h2>Pro</h2>
+        <div class="price">€29 <span>/ year</span></div>
+        <p>For professionals who need more power.</p>
+        <ul class="features">
+          <li>Everything in Free</li>
+          <li>Advanced modules (AD, Backup, Logs)</li>
+          <li>Cloud sync (Dropbox/OneDrive)</li>
+          <li>Export to .ps1</li>
+          <li>Email support</li>
+        </ul>
+        <a href="https://gum.co/kat-pro" class="cta-button">Get Pro</a>
+      </div>
+
+      <div class="plan">
+        <h2>Enterprise</h2>
+        <div class="price">Custom</div>
+        <p>For teams and large-scale deployments.</p>
+        <ul class="features">
+          <li>Everything in Pro</li>
+          <li>License management</li>
+          <li>On-premise deployment</li>
+          <li>Priority support</li>
+          <li>Custom integrations</li>
+        </ul>
+        <a href="/contact" class="cta-button">Contact Sales</a>
+      </div>
+    </div>
+
+    <div class="enterprise-cta">
+      <p>Need a custom solution? We build private instances for organizations.</p>
+      <a href="/contact" class="cta-button">Reach out</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© KIVARA. Software for those who believe automation should be elegant.<br>
+    <a href="https://github.com/DEIN-BENUTZERNAME/kat" target="_blank">GitHub</a> • <a href="/company">Company</a> • <a href="/newsletter">Newsletter</a></p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      body.setAttribute('data-theme', 'dark');
+      themeToggle.textContent = '☀️';
+    }
+    themeToggle.addEventListener('click', () => {
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+
+</body>
+</html>

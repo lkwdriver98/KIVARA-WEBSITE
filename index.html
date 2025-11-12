@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KIVARA — Intelligent Automation for IT</title>
+  <style>
+    :root {
+      --primary: #0078D4;
+      --dark: #0a0a0a;
+      --light: #fafafa;
+      --text: #222;
+      --border: #e0e0e0;
+      --shadow: rgba(0, 0, 0, 0.03);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --dark: #0f0f0f;
+      --light: #121212;
+      --text: #f0f0f0;
+      --border: #333;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    /* === NEUE NAVIGATION === */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background-color: rgba(var(--light), 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px var(--shadow);
+      transition: var(--transition);
+    }
+
+    .logo {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width 0.4s ease;
+    }
+
+    .logo:hover::after {
+      width: 100%;
+    }
+
+    /* Navigation */
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Aktive Seite hervorheben */
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Mobile Toggle (optional – falls du später eine Mobile-Navigation willst) */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* === ALTE SEITENSTYLES === */
+    .hero {
+      padding: 16rem 5% 10rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+      line-height: 1.1;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 1.2s forwards 0.1s;
+    }
+
+    .hero p {
+      font-size: 1.8rem;
+      color: #555;
+      max-width: 900px;
+      margin: 0 auto 4rem;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 1.2s forwards 0.3s;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 1.2rem 3rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.3rem;
+      box-shadow: 0 8px 30px rgba(0, 120, 212, 0.3);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 1.2s forwards 0.5s;
+      border: none;
+      cursor: pointer;
+      letter-spacing: -0.5px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 120, 212, 0.5);
+    }
+
+    .demo-container {
+      margin: 8rem auto;
+      max-width: 900px;
+      background-color: var(--light);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .demo-title {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+      font-weight: 600;
+    }
+
+    .demo-content {
+      background-color: #f8f9fa;
+      border-radius: 14px;
+      padding: 2rem;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #666;
+      border: 1px dashed var(--border);
+      animation: pulse 2.5s infinite;
+      font-weight: 500;
+    }
+
+    .features {
+      padding: 10rem 5% 8rem;
+      background-color: var(--light);
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 6rem;
+      color: var(--text);
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 1.2s forwards;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 4rem;
+    }
+
+    .feature-card {
+      background-color: var(--light);
+      padding: 3rem;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 10px 50px var(--shadow);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature-card:nth-child(1) { animation: fadeInUp 1.2s forwards 0.2s; }
+    .feature-card:nth-child(2) { animation: fadeInUp 1.2s forwards 0.4s; }
+    .feature-card:nth-child(3) { animation: fadeInUp 1.2s forwards 0.6s; }
+
+    .feature-card h3 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .feature-card p {
+      color: #666;
+      font-size: 1.3rem;
+      line-height: 1.7;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 6rem 5% 4rem;
+      color: #888;
+      font-size: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .footer a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 3rem; }
+      .hero p { font-size: 1.5rem; }
+      .features h2 { font-size: 2.5rem; }
+      .demo-title, .feature-card h3 { font-size: 1.8rem; }
+      .feature-card p { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">KIVARA</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/products">Products</a></li>
+        <li><a href="/company">Company</a></li>
+        <li><a href="/newsletter">Newsletter</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+  </header>
+
+  <section class="hero">
+    <h1>Intelligent Automation for IT</h1>
+    <p>Visual tools for PowerShell, Windows, and system administration — built for precision, designed for pleasure.</p>
+    <a href="https://github.com/DEIN-BENUTZERNAME/kat" class="cta-button">Download KAT</a>
+  </section>
+
+  <section class="demo-container">
+    <h2 class="demo-title">KAT — The Visual Automation Toolkit</h2>
+    <div class="demo-content">
+      Drag. Configure. Run. No code required.
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>Designed for the modern IT professional</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Zero Code Required</h3>
+        <p>Create complex automation workflows — from server checks to user provisioning — using a visual canvas. No PowerShell expertise needed.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Pixel-Perfect UI</h3>
+        <p>Smooth animations, dark mode, and intuitive interactions — built with WPF and .NET, refined for daily use.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Enterprise-Ready</h3>
+        <p>Lightweight, portable, secure. No installation. No dependencies. Just run. Deploy across teams with a single .exe.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>KIVARA — Software for those who believe automation should be elegant.<br>
+    <a href="https://github.com/DEIN-BENUTZERNAME/kat" target="_blank">GitHub</a> • <a href="/products">Products</a></p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      body.setAttribute('data-theme', 'dark');
+      themeToggle.textContent = '☀️';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // Aktive Seite in Navigation hervorheben
+    document.addEventListener('DOMContentLoaded', () => {
+      const path = window.location.pathname;
+      const navLinks = document.querySelectorAll('.nav-links a');
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === path) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
